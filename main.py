@@ -10,7 +10,7 @@ power = 0
 
 degatssepee = random.randint(10, 14)
 degatslance = random.randint(2, 22)
-degatsbouledefeu = random.randint(0, 20)
+degatsbouledefeu = random.choice([0, 20])
 
 
 nom = input("Entrez votre nom : ")
