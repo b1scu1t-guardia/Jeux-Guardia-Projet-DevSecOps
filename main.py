@@ -1,10 +1,17 @@
 import random
 import time
 
+list_pouvoir = ["coup d'épée", "lance de dague", "boule de feu"]
+
 lvl = 1
 life = 100
-monsterlife = 100
-power = 50
+monsterlife = 10
+power = 0
+
+degatssepee = random.randint(10, 14)
+degatslance = random.randint(2, 22)
+degatsbouledefeu = random.randint(0, 20)
+
 
 nom = input("Entrez votre nom : ")
 classe = input("Quelle est votre classe ? (Guerrier, Mage, Voleur) : ")
@@ -16,8 +23,8 @@ print("Attention ! Votre ennemi vous attaque !")
 time.sleep(1.5)
 
 while life > 0 and monsterlife > 0:
-    degats = random.randint(5, 150)
-    degatsmonstre = random.randint(5, 150)
+    degats = random.randint(5, 15)
+    degatsmonstre = random.randint(5, 15)
 
     monsterlife = max(0, monsterlife - degats)
     life = max(0, life - degatsmonstre)
@@ -32,16 +39,33 @@ if life <= 0 and monsterlife <= 0:
 elif monsterlife <= 0:
     lvl += 1
     print(f"Bravo vous avez vaincu le monstre ! Vous passez au niveau {lvl} !")
+    print(f"Vous gagnez trois pouvoir ! {list_pouvoir} ")
+
     time.sleep(2)
 
-    print("Le sol tremble... un Golem de pierre surgit devant vous !")
+    print("Un golem apparait !!! !")
     time.sleep(2)
 
-    monsterlife = 200
+    monsterlife = 50
+    print("Vous repartez avec 100 PV !")
+    life = 100
+
+    #GOLEME
 
     while life > 0 and monsterlife > 0:
-        degats = random.randint(5, 150)
-        degatsmonstre = random.randint(5, 100)
+
+        pouvoirchoisi = input(f"Choisissez votre pouvoir : {list_pouvoir} : ")
+        if pouvoirchoisi == "coup d'épée":
+            degats = degatssepee
+        elif pouvoirchoisi == "lance de dague":
+            degats = degatslance
+        elif pouvoirchoisi == "boule de feu":
+            degats = degatsbouledefeu
+        else:
+            print("Pouvoir invalide !")
+            continue
+
+        degatsmonstre = random.randint(5, 15)
 
         monsterlife = max(0, monsterlife - degats)
         life = max(0, life - degatsmonstre)
