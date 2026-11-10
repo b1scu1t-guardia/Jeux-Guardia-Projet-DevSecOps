@@ -1,5 +1,7 @@
 import random
 import time
+import json
+import os
 
 list_pouvoir = ["1 - coup d'épée", "2 - lance de dague", "3 - boule de feu"]
 
@@ -76,7 +78,7 @@ elif monsterlife <= 0:
         time.sleep(1)
         print(f"Il vous reste {life} PV, le Golem a {monsterlife} PV.")
         time.sleep(1.5)
-        
+
     if life <= 0 and monsterlife <= 0:
         print("Match nul... vous et le Golem tombez ensemble.")
     elif monsterlife <= 0:
