@@ -1,17 +1,12 @@
 import random
 import time
 
-list_pouvoir = ["coup d'épée", "lance de dague", "boule de feu"]
+list_pouvoir = ["1 - coup d'épée", "2 - lance de dague", "3 - boule de feu"]
 
 lvl = 1
 life = 100
 monsterlife = 10
 power = 0
-
-degatssepee = random.randint(10, 14)
-degatslance = random.randint(2, 22)
-degatsbouledefeu = random.choice([0, 20])
-
 
 nom = input("Entrez votre nom : ")
 classe = input("Quelle est votre classe ? (Guerrier, Mage, Voleur) : ")
@@ -27,9 +22,15 @@ while life > 0 and monsterlife > 0:
     degatsmonstre = random.randint(5, 15)
 
     monsterlife = max(0, monsterlife - degats)
-    life = max(0, life - degatsmonstre)
 
-    print(f"Vous infligez {degats} dégâts. Le monstre en inflige {degatsmonstre}.")
+    if degats < 10 and monsterlife > 0:
+        # Le monstre se moque et n'attaque pas
+        print(f"Vous infligez {degats} dégâts... Le monstre se moque de vous et n'attaque pas !")
+        degatsmonstre = 0
+    else:
+        life = max(0, life - degatsmonstre)
+        print(f"Vous infligez {degats} dégâts. Le monstre en inflige {degatsmonstre}.")
+
     time.sleep(1)
     print(f"Il vous reste {life} PV, le monstre a {monsterlife} PV.")
     time.sleep(1.5)
@@ -39,28 +40,29 @@ if life <= 0 and monsterlife <= 0:
 elif monsterlife <= 0:
     lvl += 1
     print(f"Bravo vous avez vaincu le monstre ! Vous passez au niveau {lvl} !")
-    print(f"Vous gagnez trois pouvoir ! {list_pouvoir} ")
+    print(f"Vous gagnez trois pouvoirs : {', '.join(list_pouvoir)}")
 
     time.sleep(2)
 
-    print("Un golem apparait !!! !")
+    print("Un golem apparait !!!")
     time.sleep(2)
 
     monsterlife = 50
     print("Vous repartez avec 100 PV !")
     life = 100
 
-    #GOLEME
-
+    # GOLEM
     while life > 0 and monsterlife > 0:
 
-        pouvoirchoisi = input(f"Choisissez votre pouvoir : {list_pouvoir} : ")
-        if pouvoirchoisi == "coup d'épée":
-            degats = degatssepee
-        elif pouvoirchoisi == "lance de dague":
-            degats = degatslance
-        elif pouvoirchoisi == "boule de feu":
-            degats = degatsbouledefeu
+        pouvoirchoisi = input(f"Choisissez votre pouvoir (1, 2 ou 3) :\n{chr(10).join(list_pouvoir)}\n> ")
+
+        # Les dégâts sont tirés à CHAQUE tour
+        if pouvoirchoisi == "1":
+            degats = random.randint(10, 14)
+        elif pouvoirchoisi == "2":
+            degats = random.randint(2, 22)
+        elif pouvoirchoisi == "3":
+            degats = random.choice([0, 20])
         else:
             print("Pouvoir invalide !")
             continue
@@ -74,7 +76,7 @@ elif monsterlife <= 0:
         time.sleep(1)
         print(f"Il vous reste {life} PV, le Golem a {monsterlife} PV.")
         time.sleep(1.5)
-
+        
     if life <= 0 and monsterlife <= 0:
         print("Match nul... vous et le Golem tombez ensemble.")
     elif monsterlife <= 0:
