@@ -2,6 +2,7 @@ import random
 import time
 import json
 import os
+import sys
 
 list_pouvoir = ["1 - coup d'épée", "2 - lance de dague", "3 - boule de feu"]
 inventaire = ["Potion de vie", "Potion de mana", "Piece d'or"]
@@ -41,6 +42,7 @@ while life > 0 and monsterlife > 0:
 
 if life <= 0 and monsterlife <= 0:
     print("Match nul... vous tombez tous les deux.")
+    sys.exit()
 elif monsterlife <= 0:
     lvl += 1
     print(f"Bravo vous avez vaincu le monstre ! Vous passez au niveau {lvl} !")
@@ -83,13 +85,16 @@ elif monsterlife <= 0:
 
     if life <= 0 and monsterlife <= 0:
         print("Match nul... vous et le Golem tombez ensemble.")
+        sys.exit()
     elif monsterlife <= 0:
         lvl += 1
         print(f"Incroyable ! Vous avez détruit le Golem ! Vous passez au niveau {lvl} !")
     else:
         print("Le Golem vous a écrasé...")
+        sys.exit()
 else:
     print("Vous avez été vaincu par votre ennemi...")
+    sys.exit()
 
 #INVENTAIRE
 
@@ -115,7 +120,8 @@ time.sleep(1.5)
 print("Vous trouvez un coffre !")
 time.sleep(1.5)
 print("Le jeu est simple, 3 chances, si vous trouvez le bon nombre entre 1 et 10, vous gagnez une epee magique ! si vous trouvez pas je vous prend votre piece d'or !")
-numerocoffre = random.randint(1, 10)
+# input() renvoie un texte : on compare donc deux textes
+numerocoffre = str(random.randint(1, 10))
 chance = 3
 numerojoueur = input("Entrez un nombre entre 1 et 10 : ")
 if numerojoueur == numerocoffre:
@@ -134,13 +140,14 @@ else:
             chance -= 1
             print(f"Dommage ! Il vous reste {chance} chance(s).")
     if chance == 0:
-        print("Vous n'avez pas trouvé le bon nombre... Vous perdez votre pièce d'or.")
-        inventaire.remove("Piece d'or")
-        print (f"Votre inventaire actuel : {inventaire}")
+        print(f"Vous n'avez pas trouvé le bon nombre ({numerocoffre})... Vous perdez votre pièce d'or.")
+        if "Piece d'or" in inventaire:
+            inventaire.remove("Piece d'or")
+        print(f"Votre inventaire actuel : {inventaire}")
 
 print("Vous continuez l'aventure !")
 time.sleep(1.5)
-print("Vous arrivez devant un danjon ! \n Vous devez passez 3 salles !")
+print("Vous arrivez devant un donjon ! \n Vous devez passer 3 salles !")
 print("Un squelette arrive !")
 
 #SQUELETTE
@@ -160,23 +167,26 @@ if life > 0 and monsterlife > 0:
 
     if life <= 0 and monsterlife <= 0:
         print("Match nul... vous et le squelette tombez ensemble.")
+        sys.exit()
     elif monsterlife <= 0:
         lvl += 1
         print(f"Bravo ! Vous avez vaincu le squelette ! Vous passez au niveau {lvl} !")
     else:
         print("Le squelette vous a vaincu...")
+        sys.exit()
 
-code = random.randint(100, 999)
-print(f"Vous devez trou{code[0]}vez le code d'u{code[1]}ne porte pour pa{code[3]}sser à la salle suivante !")
+# code est un texte pour pouvoir lire chaque chiffre (indices 0, 1, 2)
+code = str(random.randint(100, 999))
+print(f"Vous devez trou{code[0]}ver le code d'u{code[1]}ne porte pour pa{code[2]}sser à la salle suivante !")
 codejoueur = input("Entrez un code à 3 chiffres : ")
-if codejoueur == str(code):
+if codejoueur == code:
     print("Félicitations ! Vous avez trouvé le bon code et passez à la salle suivante !")
 else:
     print(f"Dommage ! Le bon code était {code}. Vous ne pouvez pas passer à la salle suivante.")
 
 
 #GOLEM FINAL
-if life > 0 and codejoueur == str(code):
+if life > 0 and codejoueur == code:
     print("\nLa porte s'ouvre... Le Golem final vous attend !!!")
     time.sleep(2)
 
@@ -258,7 +268,7 @@ if life > 0 and codejoueur == str(code):
         print("Match nul... vous et le Golem final tombez ensemble.")
     elif monsterlife <= 0:
         lvl += 1
-        print(f"VICTOIRE ! Vous avez détruit le Golem final ! Vous avez gagbné le jeu et passez au niveau {lvl} ! Félicitations, {nom} le {classe} !")
+        print(f"VICTOIRE ! Vous avez détruit le Golem final ! Vous avez gagné le jeu et passez au niveau {lvl} ! Félicitations, {nom} le {classe} !")
     else:
         print("Le Golem final vous a écrasé... GAME OVER")
 
