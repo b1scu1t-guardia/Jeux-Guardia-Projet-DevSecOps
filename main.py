@@ -262,3 +262,12 @@ if life > 0 and codejoueur == str(code):
     else:
         print("Le Golem final vous a écrasé... GAME OVER")
 
+
+donnees = {
+    "nom": nom,
+    "lvl": lvl,
+    "classe": classe,
+}
+
+with open("utilisateur.json", "w", encoding="utf-8") as fichier:
+    json.dump(donnees, fichier, indent=4, ensure_ascii=False)
