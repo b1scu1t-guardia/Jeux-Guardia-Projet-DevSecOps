@@ -1,7 +1,6 @@
 import random
 import time
 import json
-import os
 import sys
 
 list_pouvoir = ["1 - coup d'épée", "2 - lance de dague", "3 - boule de feu"]
@@ -178,11 +177,39 @@ if life > 0 and monsterlife > 0:
 # code est un texte pour pouvoir lire chaque chiffre (indices 0, 1, 2)
 code = str(random.randint(100, 999))
 print(f"Vous devez trou{code[0]}ver le code d'u{code[1]}ne porte pour pa{code[2]}sser à la salle suivante !")
-codejoueur = input("Entrez un code à 3 chiffres : ")
-if codejoueur == code:
-    print("Félicitations ! Vous avez trouvé le bon code et passez à la salle suivante !")
-else:
-    print(f"Dommage ! Le bon code était {code}. Vous ne pouvez pas passer à la salle suivante.")
+essais = 5
+distance_precedente = None
+print(f"Vous avez {essais} essais. Je vous dirai si vous chauffez ou si vous refroidissez !")
+
+while True:
+    codejoueur = input("Entrez un code à 3 chiffres : ")
+
+    if not (codejoueur.isdigit() and len(codejoueur) == 3):
+        print("Il faut entrer exactement 3 chiffres !")
+        continue  # un code invalide ne coûte pas d'essai
+
+    if codejoueur == code:
+        print("Félicitations ! Vous avez trouvé le bon code et passez à la salle suivante !")
+        break
+
+    essais -= 1
+    if essais == 0:
+        print(f"Dommage ! Le bon code était {code}. Vous ne pouvez pas passer à la salle suivante.")
+        break
+
+    # Chaud / froid : on compare la distance au code avec celle de l'essai précédent
+    distance = abs(int(codejoueur) - int(code))
+    if distance_precedente is None:
+        print("Raté ! Essayez encore...")
+    elif distance < distance_precedente:
+        print("Tu chauffes !")
+    elif distance > distance_precedente:
+        print("Tu refroidis...")
+    else:
+        print("Ni chaud ni froid...")
+    distance_precedente = distance
+
+    print(f"Il vous reste {essais} essai(s).")
 
 
 #GOLEM FINAL
