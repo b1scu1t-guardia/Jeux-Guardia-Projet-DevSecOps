@@ -306,5 +306,3 @@ if life > 0 and codejoueur == code:
         print(f"VICTOIRE ! Vous avez détruit le Golem final ! Vous avez gagné le jeu et passez au niveau {lvl} ! Félicitations, {nom} le {classe} !")
     else:
         print("Le Golem final vous a écrasé... GAME OVER")
-
-
