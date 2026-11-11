@@ -18,6 +18,14 @@ classe = input("Quelle est votre classe ? (Guerrier, Mage, Voleur) : ")
 print(f"Bienvenue {nom}, le {classe} ! Vous commencez votre aventure avec {life} points de vie et {power} points de puissance et vous êtes niveau {lvl}")
 time.sleep(1.5)
 
+donnees = {
+    "nom": nom,
+    "classe": classe,
+}
+
+with open("utilisateur.json", "w", encoding="utf-8") as fichier:
+    json.dump(donnees, fichier, indent=4, ensure_ascii=False)
+
 print("Attention ! Votre ennemi vous attaque !")
 time.sleep(1.5)
 
@@ -300,11 +308,3 @@ if life > 0 and codejoueur == code:
         print("Le Golem final vous a écrasé... GAME OVER")
 
 
-donnees = {
-    "nom": nom,
-    "lvl": lvl,
-    "classe": classe,
-}
-
-with open("utilisateur.json", "w", encoding="utf-8") as fichier:
-    json.dump(donnees, fichier, indent=4, ensure_ascii=False)
