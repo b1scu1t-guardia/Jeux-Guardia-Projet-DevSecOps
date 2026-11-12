@@ -3,6 +3,8 @@ import time
 import json
 import sys
 
+Version = "1.0.0"
+
 list_pouvoir = ["1 - coup d'épée", "2 - lance de dague", "3 - boule de feu"]
 inventaire = ["Potion de vie", "Potion de mana", "Piece d'or"]
 
@@ -21,6 +23,8 @@ time.sleep(1.5)
 donnees = {
     "nom": nom,
     "classe": classe,
+    "version": Version,
+    "niveau": lvl,
 }
 
 with open("utilisateur.json", "w", encoding="utf-8") as fichier:
