@@ -6,7 +6,11 @@ import sys
 Version = "1.0.0"
 
 list_pouvoir = ["1 - coup d'épée", "2 - lance de dague", "3 - boule de feu"]
-inventaire = ["Potion de vie", "Potion de mana", "Piece d'or"]
+inventaire = {
+    "Potion de vie": 50,    # PV rendus
+    "Potion de mana": 30,   # PV rendus
+    "Piece d'or": 0,
+}
 
 lvl = 1
 life = 100
@@ -105,15 +109,13 @@ print(f"Vous avez débloqué votre inventaire !! le voici: {inventaire} la taill
 boire = input("Voulez-vous boire une potion de vie ou de mana ? (vie/mana) : ")
 if boire == "vie":
     if "Potion de vie" in inventaire:
-        life += 50
-        inventaire.remove("Potion de vie")
+        life += inventaire.pop("Potion de vie")
         print(f"Vous avez bu une potion de vie ! Il vous reste {life} PV.")
     else:
         print("Vous n'avez pas de potion de vie dans votre inventaire.")
 elif boire == "mana":
     if "Potion de mana" in inventaire:
-        life += 30
-        inventaire.remove("Potion de mana")
+        life += inventaire.pop("Potion de mana")
         print(f"Vous avez bu une potion de mana ! Il vous reste {life} PV.")
     else:
         print("Vous n'avez pas de potion de mana dans votre inventaire.")
@@ -129,7 +131,7 @@ chance = 3
 numerojoueur = input("Entrez un nombre entre 1 et 10 : ")
 if numerojoueur == numerocoffre:
     print("Félicitations ! Vous avez trouvé le bon nombre et gagné une épée magique !")
-    inventaire.append("Épée magique")
+    inventaire["Épée magique"] = 30   # dégâts de l'épée
 else:
     chance -= 1
     print(f"Dommage ! Il vous reste {chance} chance(s).")
@@ -137,15 +139,14 @@ else:
         numerojoueur = input("Entrez un nombre entre 1 et 10 : ")
         if numerojoueur == numerocoffre:
             print("Félicitations ! Vous avez trouvé le bon nombre et gagné une épée magique !")
-            inventaire.append("Épée magique")
+            inventaire["Épée magique"] = 30   # dégâts de l'épée
             break
         else:
             chance -= 1
             print(f"Dommage ! Il vous reste {chance} chance(s).")
     if chance == 0:
         print(f"Vous n'avez pas trouvé le bon nombre ({numerocoffre})... Vous perdez votre pièce d'or.")
-        if "Piece d'or" in inventaire:
-            inventaire.remove("Piece d'or")
+        inventaire.pop("Piece d'or", None)
         print(f"Votre inventaire actuel : {inventaire}")
 
 print("Vous continuez l'aventure !")
@@ -256,7 +257,7 @@ if life > 0 and codejoueur == code:
 
         elif choix == "3":
             if "Épée magique" in inventaire and not epee_utilisee:
-                degats = random.randint(25, 35)
+                degats = inventaire["Épée magique"]
                 epee_utilisee = True
                 print(f"Vous brandissez l'épée magique ! Elle inflige {degats} dégâts !")
                 action_faite = True
@@ -270,13 +271,11 @@ if life > 0 and codejoueur == code:
         elif choix == "4":
             soin = input("Quelle potion ? (vie/mana) : ")
             if soin == "vie" and "Potion de vie" in inventaire:
-                life += 50
-                inventaire.remove("Potion de vie")
+                life += inventaire.pop("Potion de vie")
                 print(f"Vous buvez une potion de vie ! Vous avez maintenant {life} PV.")
                 action_faite = True
             elif soin == "mana" and "Potion de mana" in inventaire:
-                life += 30
-                inventaire.remove("Potion de mana")
+                life += inventaire.pop("Potion de mana")
                 print(f"Vous buvez une potion de mana ! Vous avez maintenant {life} PV.")
                 action_faite = True
             else:
